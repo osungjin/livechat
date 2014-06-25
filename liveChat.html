@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bootstrap 101 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+
+
+    <div class="container">
+      <!-- Message Title and Logout Button-->
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Real Time Chat with Pusher</h1>
+        </div>
+
+        <div class="col-md-4" style="text-align:right; margin-top:20px;">
+          <button id="btnLogout" type="button" class="btn btn-danger">LogOut</button>
+        </div>
+      </div>
+
+      <!-- Message Output Area -->
+      <div class="row">
+        <textarea id="txtOutput" class="form-control" rows="15" readonly="true"></textarea>
+      </div>
+
+      <!-- Message Input Area -->
+      <div class="row">
+        <h3>Input Your Massage</h3>
+        <textarea id="txtInput" class="form-control" row="3"></textarea>
+      </div>
+
+      <!-- Send Button -->
+      <div class="row" style="margin-top:10px;">
+        <button id="btnSend" type="button" class="btn btn-success" style="width:100%;">Send</button>
+      </div>
+
+    </div>
+    
+  </body>
+</html>
