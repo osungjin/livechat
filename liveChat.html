@@ -7,40 +7,71 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script src="js/bootstrap.min.js"></script>
-
+    
+    <script language="javascript">
+  		function getMsg(form) {
+  //			alert(form.txtOutput.value.length);
+  			if(form.txtInput.value.length == 0)
+  			{
+  				alert('Please input Massage!!');
+  				return;
+  			}
+  
+  			var msgOutput = form.txtOutput.value;
+  			var currMsg = 'id : ' + form.txtInput.value
+  
+  			if (form.txtOutput.value.length != 0)
+  			{
+  				msgOutput = msgOutput + '\n';
+  			}
+  			form.txtOutput.value = msgOutput + currMsg;
+  
+  			form.txtInput.value = '';
+  		}
+  
+  		function logout(form) {
+  			alert('logout!!\n'+'goto login Page');
+  
+  			form.txtOutput.value = '';
+  			form.txtInput.value = '';
+  		}
+  		//-->
+  	</script>
+  	
   </head>
   <body>
 
-
-    <div class="container">
-      <!-- Message Title and Logout Button-->
-      <div class="row">
-        <div class="col-md-8">
-          <h1>Real Time Chat with Pusher</h1>
+    <form>
+      <div class="container">
+        <!-- Message Title and Logout Button-->
+        <div class="row">
+          <div class="col-md-8">
+            <h1>Real Time Chat with Pusher</h1>
+          </div>
+  
+          <div class="col-md-4" style="text-align:right; margin-top:20px;">
+            <button id="btnLogout" type="button" class="btn btn-danger" onclick="logout(this.form)">LogOut</button>
+          </div>
         </div>
-
-        <div class="col-md-4" style="text-align:right; margin-top:20px;">
-          <button id="btnLogout" type="button" class="btn btn-danger">LogOut</button>
+  
+        <!-- Message Output Area -->
+        <div class="row">
+          <textarea id="txtOutput" class="form-control" rows="15" readonly="true"></textarea>
         </div>
+  
+        <!-- Message Input Area -->
+        <div class="row">
+          <h3>Input Your Massage</h3>
+          <textarea id="txtInput" class="form-control" row="3"></textarea>
+        </div>
+  
+        <!-- Send Button -->
+        <div class="row" style="margin-top:10px;">
+          <button id="btnSend" type="button" class="btn btn-success" style="width:100%;" onclick="getMsg(this.form)">Send</button>
+        </div>
+  
       </div>
-
-      <!-- Message Output Area -->
-      <div class="row">
-        <textarea id="txtOutput" class="form-control" rows="15" readonly="true"></textarea>
-      </div>
-
-      <!-- Message Input Area -->
-      <div class="row">
-        <h3>Input Your Massage</h3>
-        <textarea id="txtInput" class="form-control" row="3"></textarea>
-      </div>
-
-      <!-- Send Button -->
-      <div class="row" style="margin-top:10px;">
-        <button id="btnSend" type="button" class="btn btn-success" style="width:100%;">Send</button>
-      </div>
-
-    </div>
+    </form>
     
   </body>
 </html>
