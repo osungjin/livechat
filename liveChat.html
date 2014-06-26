@@ -5,29 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="//js.pusher.com/2.2/pusher.min.js"
+        type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>  
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script src="js/bootstrap.min.js"></script>
-    
-    <script language="javascript">
+    <script type="text/javascript">
+    Pusher.log = function(message) {
+        if (window.console && window.console.log) {
+            window.console.log(message);
+        }
+    };
+
+var pusher = new Pusher('b730e31b0e4649bea071');
+var channel = pusher.subscribe('test_channel');
+channel.bind('my_event', function(data) {
+//        $("#txtInput").val(data.message);
+        current_msg = currentMsg($("#txtOutput").val(),data.message);
+        $("#txtOutput").val(current_msg);
+//        displayMsg($("#txtOutput"),current_msg);
+        });
+        
   		function getMsg(form) {
-  //			alert(form.txtOutput.value.length);
   			if(form.txtInput.value.length == 0)
   			{
   				alert('Please input Massage!!');
   				return;
   			}
   
-  			var msgOutput = form.txtOutput.value;
   			var currMsg = 'id : ' + form.txtInput.value
-  
-  			if (form.txtOutput.value.length != 0)
-  			{
-  				msgOutput = msgOutput + '\n';
-  			}
-  			form.txtOutput.value = msgOutput + currMsg;
-  
-  			form.txtInput.value = '';
+            current_msg = currentMsg(form.txtOutput.value,currMsg);
+            form.txtInput.value = '';
+            displayMsg(form.txtOutput,current_msg);
   		}
+        function currentMsg(outputmsg,currMsg){
+            if(outputmsg.length == 0)
+                return currMsg;
+            return outputmsg + '\n' + currMsg;
+        }
+        function displayMsg(textarea,current_msg){
+            textarea.value = current_msg;
+        }
   
   		function logout(form) {
   			alert('logout!!\n'+'goto login Page');
