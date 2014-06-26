@@ -12,59 +12,74 @@
     <script src="js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
-      Pusher.log = function(message) {
-          if (window.console && window.console.log) {
-              window.console.log(message);
-          }
-      };
+    Pusher.log = function(message) {
+      if (window.console && window.console.log) {
+        window.console.log(message);
+      }
+    };
 
-      var pusher = new Pusher('b730e31b0e4649bea071');
-      var channel = pusher.subscribe('test_channel');
-      channel.bind('my_event', function(data) {
+    var pusher = new Pusher('b730e31b0e4649bea071');
+    var channel = pusher.subscribe('test_channel');
+    channel.bind('my_event', function(data) {
         // $("#txtInput").val(data.message);
         current_msg = currentMsg($("#txtOutput").val(),data.message);
-      
+
         $("#txtOutput").val(current_msg);
         // displayMsg($("#txtOutput"),current_msg);
       });
-        
-  		function getMsg(form) {
-  			if(form.txtInput.value.length == 0)
-  			{
-  				alert('Please input Massage!!');
-  				return;
-  			}
-  
-  			var currMsg = 'id : ' + form.txtInput.value
-            current_msg = currentMsg(form.txtOutput.value,currMsg);
-            form.txtInput.value = '';
-            displayMsg(form.txtOutput,current_msg);
-  		}
 
-      function currentMsg(outputmsg,currMsg){
-          if(outputmsg.length == 0)
-              return currMsg;
-          return outputmsg + '\n' + currMsg;
+    function getMsg(form) {
+     if(form.txtInput.value.length == 0)
+     {
+      alert('Please input Massage!!');
+      return;
+    }
+
+    var currMsg = 'id : ' + form.txtInput.value
+    form.txtInput.value = '';
+//            displayMsg(form.txtOutput,current_msg);
+            /*
+            $.ajax({
+                type:"POST",
+                dataType: 'json',
+                url:'http://138.91.17.127:5455/push_msg/',
+                data:{'msg':current_msg},
+                success:function(result){
+                    
+                }
+            });
+*/
+
+    var url = 'http://138.91.17.127:5455/push_msg/';
+    $.ajax(url, {
+      data: encodeURIComponent(currMsg),
+      success: function(response) {
       }
-      function displayMsg(textarea,current_msg){
-          textarea.value = current_msg;
+    });
+    }
+
+    function currentMsg(outputmsg,currMsg){
+      if(outputmsg.length == 0)
+        return currMsg;
+      return outputmsg + '\n' + currMsg;
+    }
+    function displayMsg(textarea,current_msg){
+      textarea.value = current_msg;
+    }
+
+    function logout(form) {
+      if(confirm('LogOut')) {
+        alert('logout!!\n'+'goto login Page');
+        form.txtOutput.value = '';
+        form.txtInput.value = '';
+      } else {
+        alert('do nothing')
       }
-  
-  		function logout(form) {
-        if(confirm('LogOut')) {
-          alert('logout!!\n'+'goto login Page');
-          form.txtOutput.value = '';
-          form.txtInput.value = '';
-        } else {
-          alert('do nothing')
-        }
-  		}
+    }
   		//-->
-  	</script>
-  	
+    </script>
   </head>
   <body>
-
     <form>
       <div class="container">
         <!-- Message Title and Logout Button-->
