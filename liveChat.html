@@ -10,21 +10,23 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>  
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script src="js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-    Pusher.log = function(message) {
-        if (window.console && window.console.log) {
-            window.console.log(message);
-        }
-    };
 
-var pusher = new Pusher('b730e31b0e4649bea071');
-var channel = pusher.subscribe('test_channel');
-channel.bind('my_event', function(data) {
-//        $("#txtInput").val(data.message);
+    <script type="text/javascript">
+      Pusher.log = function(message) {
+          if (window.console && window.console.log) {
+              window.console.log(message);
+          }
+      };
+
+      var pusher = new Pusher('b730e31b0e4649bea071');
+      var channel = pusher.subscribe('test_channel');
+      channel.bind('my_event', function(data) {
+        // $("#txtInput").val(data.message);
         current_msg = currentMsg($("#txtOutput").val(),data.message);
+      
         $("#txtOutput").val(current_msg);
-//        displayMsg($("#txtOutput"),current_msg);
-        });
+        // displayMsg($("#txtOutput"),current_msg);
+      });
         
   		function getMsg(form) {
   			if(form.txtInput.value.length == 0)
@@ -38,20 +40,24 @@ channel.bind('my_event', function(data) {
             form.txtInput.value = '';
             displayMsg(form.txtOutput,current_msg);
   		}
-        function currentMsg(outputmsg,currMsg){
-            if(outputmsg.length == 0)
-                return currMsg;
-            return outputmsg + '\n' + currMsg;
-        }
-        function displayMsg(textarea,current_msg){
-            textarea.value = current_msg;
-        }
+
+      function currentMsg(outputmsg,currMsg){
+          if(outputmsg.length == 0)
+              return currMsg;
+          return outputmsg + '\n' + currMsg;
+      }
+      function displayMsg(textarea,current_msg){
+          textarea.value = current_msg;
+      }
   
   		function logout(form) {
-  			alert('logout!!\n'+'goto login Page');
-  
-  			form.txtOutput.value = '';
-  			form.txtInput.value = '';
+        if(confirm('LogOut')) {
+          alert('logout!!\n'+'goto login Page');
+          form.txtOutput.value = '';
+          form.txtInput.value = '';
+        } else {
+          alert('do nothing')
+        }
   		}
   		//-->
   	</script>
