@@ -13,27 +13,40 @@
         if (form.id.value == "") {
           alert("Type your ID");
         }
-        else if (form.Passwd.value == "") {
-          alert("Type your Passwod");
-        }
         else {
-          location = "liveChat.html"
+          /*
+          if(sessionStorage.length > 0){
+            sessionStorage.clear();
+          }
+
+          var key = document.getElementById("inputId");
+          var id = document.getElementById("id");
+          sessionStorage[key.value] = id.value;
+          var userinfo = sessionStorage.length;
+          */
+          user = document.getElementById("id").value;
+          alert("Welcome " + user);
+
+          form.action = "liveChat.html";
+          form.method = "post";
+          form.submit();
         }
+
       }
+
     </script>
   </head>
 
-  <body>
+  <body onLoad="document.loginform.id.focus();">
     <div class="wrapper">
       <div class="lion-header-bar center"></div>
       <div class="main content clearfix">
         <div class="login card">
           <p class="profile"> </p>
-          <form id="loginform" action="" method="post" nocalidate="">
+          <form id="loginform">
 
+            <input name="inputId" id="inputId" type="hidden"></input>
             <input name="id" class="" id="id" spellcheck="false" type="id" placeholder="아이디" value=""> </input>
-
-            <input name="Passwd" class="" id="Passwd" type="password" placeholder="비밀번호"> </input>
 
             <input name="signIn" class="rc-button rc-button-submit" id="signIn" type="button" value="로그인" onClick="login(this.form)"> </input>
           </form>
