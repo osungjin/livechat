@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Real Time Chat Ku&Sejong</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="http://js.pusher.com/2.2/pusher.min.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>  
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="/static/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+    Pusher.log = function(message) {
+      if (window.console && window.console.log) {
+        window.console.log(message);
+      }
+    };
+
+    var pusher = new Pusher('b730e31b0e4649bea071');
+    var channel = pusher.subscribe('test_channel');
+    channel.bind('my_event', function(data) {
+        // $("#txtInput").val(data.message);
+        current_msg = currentMsg($("#txtOutput").val(),data.message);
+
+        $("#txtOutput").val(current_msg);
+        // displayMsg($("#txtOutput"),current_msg);
+      });
+
+    function getMsg(form) {
+     if(form.txtInput.value.length == 0)
+     {
+      alert('Please input Massage!!');
+      return;
+    }
+	
+    var currMsg = document.getElementById("username").innerHTML + ': ' + form.txtInput.value;
+    form.txtInput.value = '';
+//            displayMsg(form.txtOutput,current_msg);
+            /*
+            $.ajax({
+                type:"POST",
+                dataType: 'json',
+                url:'http://localhost/push_msg/',
+                data:{'msg':current_msg},
+                success:function(result){
+                    
+                }
+            });
+*/
+
+    var url = 'http://138.91.17.127:5455/push_msg/';
+    $.ajax(url, {
+      data: encodeURIComponent(currMsg),
+      success: function(response) {
+      }
+    });
+    }
+
+    function currentMsg(outputmsg,currMsg){
+      if(outputmsg.length == 0)
+        return currMsg;
+      return outputmsg + '\n' + currMsg;
+    }
+    function displayMsg(textarea,current_msg){
+      textarea.value = current_msg;
+    }
+
+    function logout(form) {
+      if(confirm('LogOut')) {
+        alert('logout!!\n'+'goto login Page');
+        form.txtOutput.value = '';
+        form.txtInput.value = '';
+      } else {
+        alert('do nothing')
+      }
+    }
+  		//-->
+    </script>
+  </head>
+  <body>
+    <form>
+      <div class="container">
+        <!-- Message Title and Logout Button-->
+        <div class="row">
+          <div class="col-md-8">
+            <h1>Real Time Chat with Pusher</h1>
+          </div>
+  
+          <div class="col-md-4" style="text-align:right; margin-top:20px;">
+	    Hello <span id="username" value="{{name}}">{{name}}</span>!
+            <button id="btnLogout" type="button" class="btn btn-danger" onclick="logout(this.form)">LogOut</button>
+          </div>
+        </div>
+  
+        <!-- Message Output Area -->
+        <div class="row">
+          <textarea id="txtOutput" class="form-control" rows="15" readonly="true"></textarea>
+        </div>
+  
+        <!-- Message Input Area -->
+        <div class="row">
+          <h3>Input Your Massage</h3>
+          <textarea id="txtInput" class="form-control" row="3"></textarea>
+        </div>
+  
+        <!-- Send Button -->
+        <div class="row" style="margin-top:10px;">
+          <button id="btnSend" type="button" class="btn btn-success" style="width:100%;" onclick="getMsg(this.form)">Send</button>
+        </div>
+  
+      </div>
+    </form>
+    
+  </body>
+</html>

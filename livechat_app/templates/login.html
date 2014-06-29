@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ko">
+  <head>
+    <meta charset='utf-8'></meta>
+    <meta name="viewport" content="width=300, initial-scale=1"></meta>
+    <meta name="robots" content="noindex"></meta>
+    <title>Ku&Sejong login</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/login_css.css"/>
+
+    <script type="text/javascript">
+      function login(form) {
+        if (form.id.value == "") {
+          alert("Type your ID");
+        }
+        else {
+          /*
+          if(sessionStorage.length > 0){
+            sessionStorage.clear();
+          }
+
+          var key = document.getElementById("inputId");
+          var id = document.getElementById("id");
+          sessionStorage[key.value] = id.value;
+          var userinfo = sessionStorage.length;
+          */
+
+          user = document.getElementById("id").value;
+          alert("Welcome " + user);
+
+          form.action = "/chat/";
+          form.submit();
+        }
+
+      }
+
+    </script>
+  </head>
+
+  <body onLoad="document.loginform.id.focus();">
+    <div class="wrapper">
+      <div class="lion-header-bar center"></div>
+      <div class="main content clearfix">
+        <div class="login card">
+          <p class="profile"> </p>
+          <form id="loginform">
+
+            <input name="inputId" id="inputId" type="hidden"></input>
+            <input name="id" class="" id="id" spellcheck="false" type="id" placeholder="아이디" value=""> </input>
+
+            <input name="signIn" class="rc-button rc-button-submit" id="signIn" type="button" value="로그인" onClick="login(this.form)"> </input>
+          </form>
+        </div> <!-- login card -->
+      </div> <!-- main content -->
+    </div> <!--wrapper-->
+  </body>
+
+</html>
